@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head') %>
+    <title>Gallery</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <h1 class="page-title">📸 Uploaded Gallery</h1>
+    </header>
+
+    <!-- Gallery -->
+    <div class="gallery-container">
+      <div class="gallery">
+        <% images.forEach(image => { %>
+        <div class="card">
+          <img
+            src="/uploads/<%= image.filename %>"
+            alt="<%= image.originalname %>"
+          />
+          <p class="card-name"><%= image.originalname %></p>
+          <small class="upload-date"
+            >Uploaded at: <%= new Date(image.uploadDate).toLocaleString()
+            %></small
+          >
+          <form
+            action="/delete"
+            method="POST"
+            onsubmit="return confirm('Are you sure?')"
+          >
+            <input
+              type="hidden"
+              name="filename"
+              value="<%= image.filename %>"
+            />
+            <button type="submit" class="delete-button">Delete</button>
+          </form>
+        </div>
+        <% }) %>
+      </div>
+
+      <!-- Back Button -->
+      <a href="/" class="back-home">⬅ Back to Home</a>
+    </div>
+  </body>
+</html>

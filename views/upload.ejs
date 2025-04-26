@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head') %>
+    <title>Upload File</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Upload Your Image</h1>
+      <form
+        action="/upload"
+        method="POST"
+        enctype="multipart/form-data"
+        class="upload-form"
+      >
+        <label class="custom-file-upload">
+          <input type="file" name="images" id="imageInput" multiple />
+          📷 Choose Image
+        </label>
+        <button type="submit">Upload</button>
+      </form>
+      <div id="previewContainer"></div>
+    </div>
+
+    <script>
+      const input = document.getElementById("imageInput");
+      const preview = document.getElementById("previewContainer");
+
+      input.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.innerHTML = `
+              <img src="${e.target.result}" style="margin-top:20px;max-width:100%;border-radius:12px;box-shadow: 0 8px 20px rgba(0,0,0,0.6);" />
+            `;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
+  </body>
+</html>
